@@ -1,28 +1,21 @@
-### Setup
+version: '3.7'
 
-#### Python
+services:
+  postgresql:
+    image: postgres:13
+    volumes:
+      - pgdata:/var/lib/postgresql/data:rw
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: stonk
+      POSTGRES_PASSWORD: overflow
+      POSTGRES_DB: stonkoverflow
+    tmpfs:
+      - /tmp
+      - /run
 
-This project uses [pipenv](https://pipenv-fork.readthedocs.io/en/latest/) to manage python venvs and dependencies.
+volumes:
+  pgdata:
+    driver: local
 
-##### MacOS
-Use the following to install pipenv.
-```
-brew install pipenv
-```
-
-##### Windows
-Follow the instructions listed at the pipenv website: https://docs.pipenv.org/install/#installing-pipenv
-
-
-Once pipenv is installed, run the following to set up a Python venv and install the needed dependencies.
-```
-pipenv install --dev
-```
-To use this environment, just run
-```
-pipenv shell
-```
-
-#### Database
-By default, this tooling is configured to connect to a Postgres database running on localhost. There is a docker-compose.yaml file
-in this directory that will start a postgres server with the proper configuration.
