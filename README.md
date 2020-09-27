@@ -1,7 +1,10 @@
 ### Setup
 
 #### Docker
-Make sure you have Docker Engine installed on your system so you can use docker-compose to install what you need to get up and running
+Make sure you have Docker Engine installed on your system so you can use docker-compose to install what you need to get up and running.
+```
+docker-compose up
+```
 
 #### Python
 
