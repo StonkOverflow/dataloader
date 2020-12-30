@@ -1,21 +1,35 @@
-version: '3.7'
+version: '3.8'
 
 services:
-  postgresql:
-    image: postgres:13
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    hostname: local-rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
     volumes:
-      - pgdata:/var/lib/postgresql/data:rw
+      - rabbit:/var/lib/rabbitmq:rw
+
+  postgres:
+    image: postgres:13
     ports:
       - 5432:5432
+
     environment:
-      POSTGRES_USER: stonk
-      POSTGRES_PASSWORD: overflow
-      POSTGRES_DB: stonkoverflow
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
     tmpfs:
       - /tmp
       - /run
 
+    volumes:
+      - ./local-postgres-init:/docker-entrypoint-initdb.d
+      - postgres:/var/lib/postgresql/data:rw
+
 volumes:
-  pgdata:
+  rabbit:
+    driver: local
+  postgres:
     driver: local
 
